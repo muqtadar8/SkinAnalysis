@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Analysis Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007BFF;
+        }
+        .image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Face Analysis Result</h1>
+        {% if results == "Please upload a single facial image" %}
+            <p>{{ results }}</p>
+        {% else %}
+            <img src="{% static 'temp_image.jpg' %}" alt="Uploaded Image" class="image">
+
+            <ul>
+                <li>              
+                    Gender: {{ gender }}
+                </li>
+                {% for item in results %}
+                    <li>
+                        {{ item.label }}
+                        <br>
+                        <progress max="1" value="{{ item.score  }}"></progress>                
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
